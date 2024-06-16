@@ -1,0 +1,92 @@
+/* styles.css */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    width: 75%;
+    height: 75%;
+    padding: 20px;
+    background: rgba(12, 22, 34, 0.01);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.26);
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center; /* 水平居中对齐 */
+    gap: 10px; /* 调整两个 div 之间的间距 */
+}
+
+.left-login{
+    flex: 0 0 50%;
+    display: flex;
+    justify-content: center; /* 水平居中对齐 */
+    gap: 10px; /* 调整两个 div 之间的间距 */
+}
+
+.right-login{
+    flex:1;
+    display: flex;
+}
+
+.right-login img {
+    margin-left: 8%;
+    max-width: 90%; /* Ensure the image does not exceed the width of its container */
+    max-height: 100%; /* Ensure the image does not exceed the height of its container */
+    height: auto; /* Maintain aspect ratio */
+    width: auto;
+    display: flex;
+    justify-content: center; /* 水平居中对齐 */
+    align-items: center;
+    border-radius: 15px;
+}
+
+.login-title-font{
+    margin-top: 5%;
+    color: #002fa7;
+}
+
+.login-top{
+    flex: 0 0 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5%;
+}
+
+/*--float windows--*/
+.floating-form-container {
+    display: none;
+    position: fixed;
+    flex-direction: row; /* 横向布局 */
+    justify-content: center;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 255, 255);
+    padding: 60px;
+    width: 35%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgb(0, 47, 167);
+    z-index: 1000;
+}
+
+.floating-form {
+    text-align: center;
+}
+
+
+.register-top{
+    flex: 0 0 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.text-goback{
+    display: flex;
+    left: 0%;
+}

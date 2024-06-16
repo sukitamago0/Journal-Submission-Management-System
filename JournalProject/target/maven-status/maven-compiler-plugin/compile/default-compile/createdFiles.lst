@@ -1,0 +1,17 @@
+com\journal\config\SpringConfig.class
+com\journal\dao\ManagerDAO.class
+com\journal\pojo\basicClass\User.class
+com\journal\config\jdbcConfig.class
+com\journal\controller\ManagerController.class
+com\journal\config\MybatisConfig.class
+com\journal\pojo\Expert.class
+com\journal\service\UserSeries.class
+com\journal\dao\ArticleDao.class
+com\journal\pojo\Article.class
+com\journal\service\impl\UserSeriesImpl.class
+com\journal\service\ManageService.class
+com\journal\dao\UserDao.class
+com\journal\service\impl\ManageServiceImpl.class
+com\journal\config\SpringMvcConfig.class
+com\journal\pojo\Editor.class
+com\journal\pojo\Manager.class

@@ -1,0 +1,56 @@
+-- 用户类型表
+CREATE TABLE  userType(
+  typeID int AUTO_INCREMENT PRIMARY KEY,
+  typeName VARCHAR(50)
+);
+
+
+
+-- 用户表
+CREATE TABLE user (
+  userID int PRIMARY KEY AUTO_INCREMENT,  -- 用户id
+  nickName VARCHAR(50) NOT NULL,   -- 用户昵称
+  password VARCHAR(50) NOT NULL,     --  密码
+  age int,         
+  gender VARCHAR(30), 
+  realName VARCHAR(50),   -- 真实姓名
+  cardID VARCHAR(50),       -- 身份证
+  debitCard VARCHAR(50),     -- 银行卡号
+  email VARCHAR(50) UNIQUE,
+  phone VARCHAR(50) UNIQUE,
+  creatDate TIMESTAMP,      -- 创建时间
+  typeID int,
+  FOREIGN KEY (typeID) REFERENCES userType(typeID)  -- 外键约束
+);
+
+
+-- 管理员表
+CREATE TABLE  manager(
+    account VARCHAR(50) PRIMARY KEY,
+  PASSWORD VARCHAR(50)
+);
+
+-- 类别表
+CREATE TABLE  category(
+  categoryID int PRIMARY KEY, -- 1:user 2:editor 3:expert
+  categoryName VARCHAR(30)
+);
+
+-- 稿件表
+CREATE TABLE  article(
+   articleID int PRIMARY KEY,
+  userID int,
+  title VARCHAR(30) NOT NULL,
+  filepath VARCHAR(255) UNIQUE,   -- 内容（存放稿件地址）
+  categoryID int,
+ upLoadTime VARCHAR(30),
+ updateTime VARCHAR(30),
+ state INT,   -- 稿件状态 0:未审核 1:专家审核阶段 2:退回 3:通过
+ keywords VARCHAR(30), 
+ FOREIGN KEY (categoryID) REFERENCES category(categoryID),  -- 外键约束
+ FOREIGN KEY (userID) REFERENCES user(userID)  -- 外键约束
+);
+
+INSERT INTO category VALUE(1,'user');
+INSERT INTO category VALUE(2,'editor');
+INSERT INTO category VALUE(3,'expert');
