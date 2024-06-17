@@ -130,3 +130,21 @@ document.addEventListener('DOMContentLoaded',function (){
 })
 
 
+document.addEventListener('DOMContentLoaded',function (){
+    const name = document.getElementById('demo-loginAccount');
+    const psw = document.getElementById('demo-psw');
+    const login_button = document.getElementById('login_button');
+
+    function validateInputs(event){
+        if(name.value.trim() == ''||psw.value.trim() == ''){
+            alert("请输入账号密码");
+            event.preventDefault();
+        }
+        else{
+            return true;
+        }
+    }
+
+    login_button.addEventListener("click", validateInputs)
+})
+

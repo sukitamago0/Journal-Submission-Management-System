@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Upload</title>
+</head>
+<body>
+<h2>Upload File</h2>
+<form id="uploadForm" enctype="multipart/form-data">
+  <input type="file" name="file" id="fileInput">
+  <button type="submit">Upload</button>
+</form>
+<!--导入jquery库-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+  document.getElementById('uploadForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    var formData = new FormData();
+    formData.append('file', document.getElementById('fileInput').files[0]);
+
+    fetch('/files/upload', {
+      method: 'POST',
+      body: formData
+    })
+            .then(response => response.json())
+            .then(data => {
+              if(data.success) {
+                alert(data.message);
+              } else {
+                alert(data.message);
+              }
+              document.getElementById('uploadForm').reset();
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              alert('Failed to upload file.');
+            });
+  });
+
+
+  function downloadFile() {
+    // 发送 AJAX 请求
+    $.ajax({
+      url: '/files/download',
+      method: 'GET',
+      xhrFields: {
+        responseType: 'blob'
+      },
+      success: function(data, status, xhr) {
+        // 获取文件名
+        var fileName = '';
+        var disposition = xhr.getResponseHeader('Content-Disposition');
+        if (disposition && disposition.indexOf('attachment') !== -1) {
+          var fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+          var matches = fileNameRegex.exec(disposition);
+          if (matches != null && matches[1]) {
+            fileName = matches[1].replace(/['"]/g, '');
+          }
+        }
+
+        // 创建隐藏的<a>元素，并设置下载属性
+        var a = document.createElement('a');
+        var url = window.URL.createObjectURL(data);
+        a.href = url;
+        a.download = fileName || 'customFileName.doc'; // 如果没有获取到文件名，则默认为 customFileName.doc
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        // 触发点击事件下载文件
+        a.click();
+        // 移除<a>元素
+        document.body.removeChild(a);
+        // 释放URL对象
+        window.URL.revokeObjectURL(url);
+      },
+      error: function(xhr, status, error) {
+        console.error('文件下载失败:', error);
+      }
+    });
+  }
+
+</script>
+
+<button onclick="downloadFile()">下载</button>
+</body>
+</html>

@@ -6,7 +6,7 @@ import com.journal.dao.ArticleDao;
 import com.journal.dao.UserDao;
 import com.journal.pojo.Article;
 import com.journal.pojo.basicClass.User;
-import com.journal.service.UserSeries;
+import com.journal.service.UserService;
 import com.journal.utils.PageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class UserServiceImpl implements UserSeries {
+public class UserServiceImpl implements UserService {
     @Autowired
     UserDao userDao;
     @Autowired
@@ -169,4 +169,41 @@ public class UserServiceImpl implements UserSeries {
         List<Article> articles = articleDao.findAllArticlesOrderByUpdateTime();
         return new PageInfo<>(articles);
     }
+
+    /**
+     * 根据id查询文章
+     * @param articleId
+     * @return
+     */
+    @Override
+    public Article findArticleById(int articleId) {
+        return articleDao.findArticleById(articleId);
+    }
+
+    /**
+     * 更新文章
+     * @param article
+     * @return
+     */
+    @Override
+    public int updateArticleById(Article article) {
+        return articleDao.updateArticle(article);
+    }
+
+    /**
+     * 首次存储文章
+     * @param article
+     * @return
+     */
+    @Override
+    public int saveArticle(Article article) {
+        return articleDao.saveArticle(article);
+    }
+
+    @Override
+    public int findCategoryIdByName(String categoryName) {
+        return articleDao.findCategoryIdByName(categoryName);
+    }
 }
+
+

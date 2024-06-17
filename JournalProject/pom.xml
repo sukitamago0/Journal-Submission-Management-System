@@ -15,7 +15,20 @@
 
   <dependencies>
 
-<!--日志-->
+
+<!--  处理不同格式的 Microsoft Office 文档    -->
+      <dependency>
+          <groupId>org.apache.poi</groupId>
+          <artifactId>poi</artifactId>
+          <version>5.2.3</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.poi</groupId>
+          <artifactId>poi-scratchpad</artifactId>
+          <version>5.2.3</version>
+      </dependency>
+
+      <!--日志-->
       <dependency>
           <groupId>org.apache.logging.log4j</groupId>
           <artifactId>log4j-api</artifactId>
@@ -49,6 +62,20 @@
       <version>1.18.24</version>
       <scope>provided</scope>
     </dependency>
+
+<!--      用于处理HTTP文件上传-->
+      <dependency>
+          <groupId>commons-fileupload</groupId>
+          <artifactId>commons-fileupload</artifactId>
+          <version>1.4</version>
+      </dependency>
+
+      <!--      提供了对Thymeleaf模板引擎的支持,用于生成HTML、XML和其他文本内容的现代服务器端模板引擎-->
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-thymeleaf</artifactId>
+          <version>2.6.2</version>
+      </dependency>
 
     <dependency>
       <groupId>javax.servlet</groupId>

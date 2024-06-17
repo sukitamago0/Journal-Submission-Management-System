@@ -33,7 +33,7 @@
 
             <div class="login-top">
                 <div class="col-12">
-                <li><input type="submit" value="Log in" class="primary" /></li>
+                <li><input type="submit" value="Log in" class="primary" id="login_button"/></li>
             </div>
             </div>
             </div>
@@ -114,15 +114,7 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Check if error message exists in session
-            var errorMessage = "${sessionScope.error}";
-            if (errorMessage) {
-                alert(errorMessage);
-                // Clear the error message in session to avoid displaying it again
-                 session.removeAttribute("error");
-            }
-        });
+
     </script>
 
 

@@ -1,6 +1,7 @@
 package com.journal.pojo;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class Article {
@@ -11,8 +12,9 @@ public class Article {
     private int categoryID;
     private String upLoadTime;
     private String updateTime;
-    private int state;
+    private int state = 1;
     private String keywords;
     private int count;
-
+    private String nickName;
+    private String categoryName;
 }

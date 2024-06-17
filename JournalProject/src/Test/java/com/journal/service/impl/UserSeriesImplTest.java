@@ -4,8 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.journal.config.SpringConfig;
 import com.journal.dao.UserDao;
 import com.journal.pojo.Article;
-import com.journal.service.UserSeries;
-import org.junit.Before;
+import com.journal.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {SpringConfig.class})
 @WebAppConfiguration
@@ -23,7 +21,7 @@ public class UserSeriesImplTest {
     @Autowired
     UserDao userDao;
     @Autowired
-    UserSeries userSeries;
+    UserService userSeries;
 
     @Test
     public void findAllArticlesOrderByUpdateTime() {

@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface UserSeries {
+public interface UserService {
     PageInfo<Article> findByAuthor(String searchWord, PageRequest page);
     PageInfo<Article> findByCategory(String searchWord, PageRequest page);
     PageInfo<Article>findByKeyWord(String searchWord, PageRequest page);
@@ -21,4 +21,8 @@ public interface UserSeries {
     User findByEmailAndPassword(User user);
     List<Article> findArticleByKey(String searchWord);
     PageInfo<Article> findAllArticlesOrderByUpdateTime(int pageNum, int pageSize);
+    Article findArticleById(int articleId );
+    int updateArticleById(Article article);
+    int saveArticle(Article article);
+    int findCategoryIdByName(String categoryName);
 }
