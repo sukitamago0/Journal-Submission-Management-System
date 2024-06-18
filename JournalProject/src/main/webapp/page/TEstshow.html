@@ -23,7 +23,7 @@
     $(document).ready(function() {
         $('#loadContent').click(function() {
             $.ajax({
-                url: '/files/show',
+                url: '/files/show?articleID=1006',
                 method: 'GET',
                 success: function(response) {
                     if (response.success) {

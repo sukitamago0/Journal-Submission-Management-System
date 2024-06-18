@@ -1,0 +1,45 @@
+
+
+
+.floating-form-container {
+    display: none;
+    position: fixed;
+    flex-direction: row; /* 横向布局 */
+    justify-content: center;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 255, 255);
+    padding: 60px;
+    width: 35%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgb(0, 47, 167);
+    z-index: 1000;
+}
+
+.floating-form {
+    text-align: center;
+}
+
+
+.register-top{
+    flex: 0 0 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.text-goback{
+    display: flex;
+    left: 0%;
+}
+
+.left{
+    display: flex;
+    flex: 0 0 50%;
+}
+
+.right{
+    display: flex;
+    flex: 1;
+}

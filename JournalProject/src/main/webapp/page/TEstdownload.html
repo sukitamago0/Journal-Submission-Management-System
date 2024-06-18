@@ -7,44 +7,14 @@
 </head>
 <body>
 <h2>Upload File</h2>
-<form id="uploadForm" enctype="multipart/form-data">
-  <input type="file" name="file" id="fileInput">
-  <button type="submit">Upload</button>
-</form>
 <!--导入jquery库-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
-
-  document.getElementById('uploadForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    var formData = new FormData();
-    formData.append('file', document.getElementById('fileInput').files[0]);
-
-    fetch('/files/upload', {
-      method: 'POST',
-      body: formData
-    })
-            .then(response => response.json())
-            .then(data => {
-              if(data.success) {
-                alert(data.message);
-              } else {
-                alert(data.message);
-              }
-              document.getElementById('uploadForm').reset();
-            })
-            .catch(error => {
-              console.error('Error:', error);
-              alert('Failed to upload file.');
-            });
-  });
-
-
   function downloadFile() {
     // 发送 AJAX 请求
     $.ajax({
-      url: '/files/download',
+      url: '/files/download?articleID=1006',
       method: 'GET',
       xhrFields: {
         responseType: 'blob'

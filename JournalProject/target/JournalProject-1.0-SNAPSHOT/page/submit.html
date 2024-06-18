@@ -51,6 +51,28 @@
 									<hr class="major" />
 									<h2>投递您的稿件</h2>
 									<form id="uploadForm" enctype="multipart/form-data">
+										<div class="search-form">
+											<div class="left-div">
+												<div class="col-12">
+													<select name="demo-category" id="demo-category">
+														<option value="">科幻</option>
+														<option value="1">童话</option>
+														<option value="1">ab</option>
+														<option value="1">cd</option>
+													</select>
+												</div>
+											</div>
+											<div class="mid-div">
+												<div class="col-6 col-12-xsmall">
+													<input type="text" name="demo-name" id="demo-name" value="" placeholder="标题" />
+												</div>
+											</div>
+										</div>
+										<br>
+										<div class="col-12">
+										<textarea name="demo-message" id="demo-message" placeholder="文章简介(关键词)" rows="6"></textarea>
+									</div>
+										<br>
 										<input type="file" id="fileInput" name="file">
 										<button type="submit">Upload</button>
 									</form>
@@ -97,7 +119,7 @@
 										<li><a href="#">管理员帐号登录</a></li>
 									</ul>
 								</li>
-								<li><a href="#">联系我们</a></li>
+								<li><a href="#contentUs">联系我们</a></li>
 								<li><a href="/users/exitlogin" >退出登录</a></li>
 							</ul>
 						</nav>

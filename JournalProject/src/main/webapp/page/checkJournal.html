@@ -1,10 +1,204 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<link rel="stylesheet" href="../assets/css/main.css" />
 <head>
-    <meta charset="UTF-8">
     <title>稿件审核</title>
+    <meta charset="utf-8" />
+    <!--保证不同设备显示效果-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/checkJournal.css" />
 </head>
-<body>
+<body class="is-preload">
+<!-- Wrapper -->
+<div id="wrapper">
+    <!-- Main -->
+    <div id="main">
+        <div class="inner">
+
+            <!-- Header -->
+            <header id="header">
+                <a href="index.html" class="logo"><strong>期刊投稿</strong>管理系统</a>
+                <ul class="icons">
+                    <li><a href="../personalHtml/personalHome.html" class="icon brands fa-medium-m" data-tooltip="个人主页"><span class="label">Medium</span></a></li>
+                </ul>
+            </header>
+
+            <section>
+                <header class="main">
+                    <h1>稿件审核</h1>
+                </header>
+            </section>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>名称</th>
+                        <th>类别</th>
+                        <th>作者</th>
+                        <th>上传时间</th>
+                        <th>审核</th>
+                    </tr>
+                    </thead>
+                    <tbody id="table-articles">
+                                <tr>
+                                  <td>AC001</td>
+                                  <td>Ante turpis integer aliquet porttitor.</td>
+                                  <td>NoName</td>
+                                  <td>Item1</td>
+                                  <td>2024.12.12</td>
+                                  <td><a href="" id="check_journal">查看</a> </td>
+                                </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="page-span">
+                <ul class="pagination" id="table_navigator">
+                    <!--          <li><span class="button disabled">Prev</span></li>-->
+                    <!--          <li><a href="#" class="page active">1</a></li>-->
+                    <!--          <li><a href="#" class="button">Next</a></li>-->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+<!-- Sidebar -->
+    <div id="sidebar">
+        <div class="inner">
+
+            <!-- Search -->
+            <section id="search" class="alt">
+                <form method="post" action="#">
+                    <input type="text" name="query" id="query" placeholder="Search" />
+                </form>
+            </section>
+
+            <nav id="menu">
+                <header class="major">
+                    <h2>Menu</h2>
+                </header>
+                <ul>
+                    <li><a href="index.html">主页</a></li>
+                    <li><a href="submit.html">期刊投稿</a></li>
+                    <li><a href="selectJournal.html">期刊查找</a></li>
+                    <li>
+                        <span class="opener">热门期刊分类</span>
+                        <ul>
+                            <li><a href="#">Lorem Dolor</a></li>
+                            <li><a href="#">Ipsum Adipiscing</a></li>
+                            <li><a href="#">Tempus Magna</a></li>
+                            <li><a href="#">Feugiat Veroeros</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">文库热度排行榜</a></li>
+                    <li>
+                        <span class="opener">登录</span>
+                        <ul>
+                            <li><a href="Login.html">用户登录</a></li>
+                            <li><a href="#">管理员帐号登录</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#contentUs">联系我们</a></li>
+                    <li><a href="/users/exitlogin" >退出登录</a></li>
+                </ul>
+            </nav>
+
+
+            <!-- Section -->
+            <section>
+                <header class="major">
+                    <h2>Ante interdum</h2>
+                </header>
+                <div class="mini-posts">
+                    <article>
+                        <a href="#" class="image"><img src="../images/pic07.jpg" alt="" /></a>
+                        <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+                    </article>
+                    <article>
+                        <a href="#" class="image"><img src="../images/pic08.jpg" alt="" /></a>
+                        <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+                    </article>
+                    <article>
+                        <a href="#" class="image"><img src="../images/pic09.jpg" alt="" /></a>
+                        <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+                    </article>
+                </div>
+                <ul class="actions">
+                    <li><a href="#" class="button">More</a></li>
+                </ul>
+            </section>
+
+            <!-- Section -->
+            <section>
+                <header class="major">
+                    <h2>联系我们</h2>
+                </header>
+                <p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+                <ul class="contact">
+                    <li class="icon solid fa-envelope"><a href="#">unKnown@untitled.tld</a></li>
+                    <li class="icon solid fa-phone">(000) 000-0000</li>
+                    <li class="icon solid fa-home">广东省湛江市麻章区海大路1号<br/>
+                        期刊投稿管理系统</li>
+                </ul>
+            </section>
+
+            <!-- Footer -->
+            <footer id="footer">
+                <p class="copyright">版权及最终解释权所有&copy;本站制作组</p>
+            </footer>
+
+        </div>
+    </div>
+</div>
+
+
+<!--    审核弹窗-->
+    <div class="floating-form-container" id="floating-form-re">
+    <div class="floating-form">
+        <h1><div class="login-title-font">稿件审核</div></h1>
+        <form action="#" method="post">
+            <div class="row gtr-uniform">
+                <div class="left">
+                <blockquote>点击下载源文件:</blockquote>
+                </div>
+                <div class="right">
+                <ul class="actions">
+                    <li><a href="#" class="button primary">Download</a></li>
+                </ul>
+                </div>
+                <br>
+                <div class="col-12">
+                    <textarea name="demo-message" id="demo-message" placeholder="回复建议（若需要）" rows="6"></textarea>
+                </div>
+                <br>
+
+                <!--     单选框-->
+                <div class="col-4 col-12-small">
+                    <input type="radio" id="demo-priority-low" name="demo-priority" checked>
+                    <label for="demo-priority-low">刊用</label>
+                </div>
+                <div class="col-4 col-12-small">
+                    <input type="radio" id="demo-priority-normal" name="demo-priority">
+                    <label for="demo-priority-normal">不刊用</label>
+                </div>
+            </div>
+            <br>
+                <li><a href="#" class="button primary fit">submit</a></li>
+        </form>
+
+        <p class="close-btn" id="close-floating-form">←返回</p>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="../assets/js/checkFloat.js"></script>
 
 </body>
 </html>
