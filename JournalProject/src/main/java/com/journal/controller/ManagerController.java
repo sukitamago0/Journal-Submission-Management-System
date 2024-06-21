@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/managers")
 public class ManagerController {
@@ -35,9 +37,11 @@ public class ManagerController {
      * @return
      */
     @RequestMapping("/login")
-    public ApiResponse<Manager> login(@RequestBody Manager m) {
+    public ApiResponse<Manager> login(@RequestBody Manager m, HttpServletRequest request) {
         Manager manager = manageService.findByAccount(m.getAccount(), m.getPassword());
         if (manager != null) {
+            //存储管理员登录session
+            request.getSession().setAttribute("manager",manager);
             return new ApiResponse<>(true, "Success", manager);
         } else {
             return new ApiResponse<>(false, "Manager not found", null);

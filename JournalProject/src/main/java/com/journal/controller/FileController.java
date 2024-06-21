@@ -1,6 +1,7 @@
 package com.journal.controller;
 
 import com.journal.pojo.Article;
+import com.journal.pojo.basicClass.User;
 import com.journal.service.UserService;
 import com.journal.utils.ApiResponse;
 import org.apache.poi.hwpf.HWPFDocument;
@@ -40,9 +41,8 @@ public class FileController {
     @RequestMapping("/upload")
     public ApiResponse<String> uploadFile(@RequestParam("file") MultipartFile file, Article article, HttpServletRequest request) {
         // 获取当前用户，设置文章的用户id和类别id
-//        User user = (User) request.getSession().getAttribute("user");
-//        article.setUserID(user.getUserID());
-        article.setUserID(1001);
+        User user = (User) request.getSession().getAttribute("user");
+        article.setUserID(user.getUserID());
         int categoryId = userService.findCategoryIdByName(article.getCategoryName());
         article.setCategoryID(categoryId);
 
@@ -107,9 +107,9 @@ public class FileController {
     }
 
 
-    //内容传输api(download?articleID=)w
+    //阅读文章内容api
     @RequestMapping("/show")
-    public ApiResponse<String> getFileContent(@RequestParam("articleID") int articleID) {
+    public ApiResponse<Article> getFileContent(@RequestParam("articleID") int articleID) {
         // 根据文章ID从数据库中获取文件路径
         Article article = userService.findArticleById(articleID);
         String filePath1 = article.getFilepath();
@@ -117,17 +117,22 @@ public class FileController {
         Path filePath = Paths.get(uploadDir+filePath1);
         // 读取文件内容
         String fileContent;
+
         try (FileInputStream fis = new FileInputStream(filePath.toFile())) {
             HWPFDocument document = new HWPFDocument(fis);
             WordExtractor extractor = new WordExtractor(document);
             fileContent = extractor.getText();
+            article.setText(fileContent);
+            //将文章点击次数+1,实现实现统计文章点击次数
+            article.setCount(article.getCount()+1);
+            userService.updateArticleCount(article);
         } catch (IOException e) {
             e.printStackTrace();
             // 如果读取文件失败，则返回错误响应
             return new ApiResponse<>(false, "Failed to read file", null);
         }
         // 构建成功响应
-        return new ApiResponse<>(true, "File content retrieved successfully", fileContent);
+        return new ApiResponse<>(true, "File content retrieved successfully", article);
     }
 }
 

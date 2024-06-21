@@ -17,4 +17,5 @@ public class Article {
     private int count;
     private String nickName;
     private String categoryName;
+    private String Text; //文章内容
 }

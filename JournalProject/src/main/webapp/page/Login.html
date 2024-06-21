@@ -7,35 +7,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="../assets/css/main.css" />
     <link rel="stylesheet" href="../assets/css/login.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
+<script>
+
+    // 监听注册按钮点击事件
+    function submitBtn() {
+        // 获取表单数据
+        var nickName = document.querySelector('#demo-registerName').value;
+        var password = document.querySelector('#demo-registerPsw').value;
+        var phone = document.querySelector('#demo-registerPhone').value;
+        var email = document.querySelector('#demo-registerEmail').value;
+        var gender = document.querySelector('input[name="demo-priority"]:checked').value;
+        alert(gender);
+        // 发送 AJAX 请求到后端
+        $.ajax({
+            url: '/users/insertUser',
+            method: 'POST',
+            contentType: 'application/json', // 设置内容类型为 JSON
+            data: JSON.stringify({
+                nickName: nickName,
+                password: password,
+                email: email,
+                phone: phone,
+                gender: gender
+            }),
+            success: function (response) {
+                // 处理后端返回的响应
+                if (response.success) {
+                    alert('注册成功！'); // 显示成功消息
+                    // 关闭注册窗口
+                    document.getElementById('floating-form-re').style.display = 'none';
+                } else {
+                    alert('注册失败，请联系管理员！'); // 显示失败消息
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error); // 打印错误信息
+                alert('注册失败，请联系管理员！'); // 显示失败消息
+            }
+        });
+    }
+
+</script>
+
+
 <body>
-    <div class="login-container">
-        <div class = left-login>
+<div class="login-container">
+    <div class = left-login>
         <form class="form-login" method="post" action="/users/login" >
             <text class="text-goback"><a href="index.html">← GO BACK</a></text>
             <header class="main">
-            <h1><div class="login-title-font">登录</div></h1>
+                <h1><div class="login-title-font">登录</div></h1>
                 <p>登录体验更多功能</p>
             </header>
             <div class="row gtr-uniform">
                 <div class="login-top">
-                <div class="col-6 col-12-xsmall">
-                    <input type="text" name="demo-loginAccount" id="demo-loginAccount" value="" placeholder="手机号或邮箱" />
-                </div>
+                    <div class="col-6 col-12-xsmall">
+                        <input type="text" name="demo-loginAccount" id="demo-loginAccount" value="" placeholder="手机号或邮箱" />
+                    </div>
                 </div>
 
                 <div class="login-top">
-                <div class="col-6 col-12-xsmall">
-                    <input type="password" name="demo-psw" id="demo-psw" value="" placeholder="密码 Password" />
-                </div>
+                    <div class="col-6 col-12-xsmall">
+                        <input type="password" name="demo-psw" id="demo-psw" value="" placeholder="密码 Password" />
+                    </div>
                 </div>
 
-            <div class="login-top">
-                <div class="col-12">
-                <li><input type="submit" value="Log in" class="primary" id="login_button"/></li>
-            </div>
-            </div>
+                <div class="login-top">
+                    <div class="col-12">
+                        <li><input type="submit" value="Log in" class="primary" id="login_button"/></li>
+                    </div>
+                </div>
             </div>
 
             <div class="login-top">
@@ -46,74 +90,74 @@
                 <a href="#">忘记密码？点击此处找回</a>
             </div>
         </form>
-        </div>
-
-        <div class ="right-login">
-            <img src="../images/Login-01.jpg">
-        </div>
     </div>
 
-    <div class="floating-form-container" id="floating-form-re">
-        <div class="floating-form">
-            <h1><div class="login-title-font">注册</div></h1>
-            <form action="#" method="post">
-                <div class="row gtr-uniform">
-                    <div class="register-top">
-                        <div class="col-6 col-12-xsmall">
-                            <input type="text" name="demo-registerName" id="demo-registerName" value="" placeholder="请输入您的用户名" />
-                        </div>
-                    </div>
+    <div class ="right-login">
+        <img src="../images/Login-01.jpg">
+    </div>
+</div>
 
-                    <div class="register-top">
-                        <div class="col-6 col-12-xsmall">
-                            <input type="password" name="demo-registerPsw" id="demo-registerPsw" value="" placeholder="请输入您的密码" />
-                        </div>
+<div class="floating-form-container" id="floating-form-re">
+    <div class="floating-form">
+        <h1><div class="login-title-font">注册</div></h1>
+        <form action="#" method="post">
+            <div class="row gtr-uniform">
+                <div class="register-top">
+                    <div class="col-6 col-12-xsmall">
+                        <input type="text" name="nickName" id="demo-registerName" value="" placeholder="请输入您的用户名" />
                     </div>
+                </div>
 
-                    <div class="register-top">
+                <div class="register-top">
+                    <div class="col-6 col-12-xsmall">
+                        <input type="password" name="password" id="demo-registerPsw" value="" placeholder="请输入您的密码" />
+                    </div>
+                </div>
+
+                <div class="register-top">
                     <div class="col-6 col-12-xsmall">
                         <input type="password" name="demo-registerPsw2" id="demo-registerPsw2" value="" placeholder="请确认您的密码" />
                     </div>
-                    </div>
-
-                    <div class="register-top">
-                        <div class="col-6 col-12-xsmall">
-                            <input type="text" name="demo-registerPhone" id="demo-registerPhone" value="" placeholder="请填写您的手机号" />
-                        </div>
-                    </div>
-
-                    <div class="register-top">
-                        <div class="col-6 col-12-xsmall">
-                            <input type="text" name="demo-registerEmail" id="demo-registerEmail" value="" placeholder="请填写您的邮箱" />
-                        </div>
-                    </div>
-<!--                    性别单选框-->
-                    <div class="col-4 col-12-small">
-                        <input type="radio" id="demo-priority-low" name="demo-priority" checked>
-                        <label for="demo-priority-low">男</label>
-                    </div>
-                    <div class="col-4 col-12-small">
-                        <input type="radio" id="demo-priority-normal" name="demo-priority">
-                        <label for="demo-priority-normal">女</label>
-                    </div>
-                    <div class="col-4 col-12-small">
-                        <input type="radio" id="demo-priority-high" name="demo-priority">
-                        <label for="demo-priority-high">不愿透露</label>
-                    </div>
-
-                    <div class="register-top">
-                        <p id="error-message" style="color: rgb(208,94,94); display: none;"></p>
-                    </div>
-
-                    <div class="register-top"> <button type="submit" id="register-button">注册</button></div>
                 </div>
-            </form>
-            <p class="close-btn" id="close-floating-form">已有账号？点击登录</p>
-        </div>
+
+                <div class="register-top">
+                    <div class="col-6 col-12-xsmall">
+                        <input type="text" name="phone" id="demo-registerPhone" value="" placeholder="请填写您的手机号" />
+                    </div>
+                </div>
+
+                <div class="register-top">
+                    <div class="col-6 col-12-xsmall">
+                        <input type="text" name="email" id="demo-registerEmail" value="" placeholder="请填写您的邮箱" />
+                    </div>
+                </div>
+                <!--                    性别单选框-->
+                <div class="col-4 col-12-small">
+                    <input type="radio" id="demo-priority-low" name="demo-priority" checked value="男">
+                    <label for="demo-priority-low">男</label>
+                </div>
+                <div class="col-4 col-12-small">
+                    <input type="radio" id="demo-priority-normal" name="demo-priority" value="女">
+                    <label for="demo-priority-normal">女</label>
+                </div>
+                <div class="col-4 col-12-small">
+                    <input type="radio" id="demo-priority-high" name="demo-priority" value="不愿透露">
+                    <label for="demo-priority-high">不愿透露</label>
+                </div>
+
+                <div class="register-top">
+                    <p id="error-message" style="color: rgb(208,94,94); display: none;"></p>
+                </div>
+
+                <div class="register-top"> <button type="button" id="register-button" onclick="submitBtn()">注册</button></div>
+            </div>
+        </form>
+        <p class="close-btn" id="close-floating-form">已有账号？点击登录</p>
     </div>
+</div>
 
 
 
-    <script src="../assets/js/login.js"></script>
+<script src="../assets/js/login.js"></script>
 </body>
 </html>

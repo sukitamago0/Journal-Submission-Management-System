@@ -15,7 +15,8 @@ public class User {
     private String email;
     private String phone;
     private String creatDate;
-    private int typeID;
+    private int typeID = 1;  //1：普通用户   2.编辑    3.专家
+    private int categoryID = 0;   //默认设为0，0在category表中不存在，即为表示没有专业领域（没有审稿权限）
 
     public User(int userID, String password, String nickName, int age, String gender, String realName, String cardID, String debitCard, String email, String phone, int typeID) {
         this.userID = userID;

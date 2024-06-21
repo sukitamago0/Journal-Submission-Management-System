@@ -35,7 +35,7 @@ public interface UserDao {
      * @param user
      * @return
      */
-    @Insert("INSERT INTO user (nickName, password, email, phone,typeID,creatDate) VALUES (#{nickName}, #{password}, #{email}, #{phone},#{typeID},NOW())")
+    @Insert("INSERT INTO user (nickName, password,email, phone,typeID,creatDate,gender) VALUES (#{nickName}, #{password}, #{email}, #{phone},#{typeID},NOW(),#{gender})")
     int insertUser(User user);
 
     /**

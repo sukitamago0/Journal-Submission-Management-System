@@ -24,7 +24,6 @@
     axios.get(url)
             .then((res) => {
               console.log(res.data);
-
               //更新书籍表单
               var articleList = res.data.data.list;  //获取返回的数据
               var ss =""
@@ -38,10 +37,9 @@
                         "</td> <td>"+article.upLoadTime+"</td> <td>"+
                         "</td> <td>"+article.updateTime+"</td> <td>"+
                         "</td> <td>"+article.count+"</td> <td>"+
-                        "</td> <td><a href='#"+article.articleID+"'>查阅</a></td></tr>";
+                        "</td> <td><a href='/page/journalShow.html?articleID="+article.articleID+"'>查阅</a></td></tr>";
               }
               document.getElementById("table-articles").innerHTML=ss;
-
               // 更新导航栏
               var cur = res.data.data.pageNum;
               //当前已经是第一页时，禁用pre按钮
@@ -58,7 +56,7 @@
                 navigator += "<li><a class='page' onclick='findArticles("+i+")'>"+i+"</a></li>";
               }
               //当前已经是最后一页时，禁用next按钮
-              if (cur == res.data.data.pages){
+              if (cur == res.data.data.pages || res.data.data.pages==0){
                 navigator+="<li><a class='button disabled' onclick='findArticles("+cur+1+")'>Next</a></li>";
               }else {
                 navigator+="<li><a class='button' onclick='findArticles("+(cur+1)+")'>Next</a></li>";
@@ -190,12 +188,12 @@
               <li><a href="#">Feugiat Veroeros</a></li>
             </ul>
           </li>
-          <li><a href="#">文库热度排行榜</a></li>
+          <li><a href="RankByhOT.html">文库热度排行榜</a></li>
           <li>
             <span class="opener">登录</span>
             <ul>
               <li><a href="Login.html">用户登录</a></li>
-              <li><a href="#">管理员帐号登录</a></li>
+              <li><a href="managerLogin.html">管理员帐号登录</a></li>
             </ul>
           </li>
           <li><a href="#contentUs">联系我们</a></li>

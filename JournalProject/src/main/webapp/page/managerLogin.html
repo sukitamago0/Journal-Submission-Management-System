@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>管理员登录</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/login.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="login-container">
+  <div class="left-login">
+    <form id="loginForm" class="form-login">
+      <text class="text-goback"><a href="index.html">← GO BACK</a></text>
+      <header class="main">
+        <h1><div class="login-title-font">管理员登录</div></h1>
+      </header>
+      <div class="row gtr-uniform">
+        <div class="login-top">
+          <div class="col-6 col-12-xsmall">
+            <input type="text" name="account" id="account" value="" placeholder="手机号或邮箱" required />
+          </div>
+        </div>
+
+        <div class="login-top">
+          <div class="col-6 col-12-xsmall">
+            <input type="password" name="password" id="password" value="" placeholder="密码 Password" required />
+          </div>
+        </div>
+
+        <div class="login-top">
+          <div class="col-12">
+            <li><input type="submit" value="Log in" class="primary" id="login_button"/></li>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class ="right-login">
+    <img src="../images/Login-01.jpg">
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $("#loginForm").on("submit", function(event) {
+      event.preventDefault(); // 阻止表单的默认提交行为
+
+      var account = $("#account").val();
+      var password = $("#password").val();
+
+      $.ajax({
+        type: "POST",
+        url: "/managers/login",
+        contentType: "application/json",
+        data: JSON.stringify({
+          account: account,
+          password: password
+        }),
+        success: function(response) {
+          if (response.success) {
+            alert("Login successful: " + response.message);
+            // handle success, e.g., redirect to another page
+          } else {
+            alert("Login failed: " + response.message);
+          }
+        },
+        error: function(error) {
+          alert("Error: " + error.statusText);
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

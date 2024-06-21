@@ -5,7 +5,69 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="../assets/css/main.css" />
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	</head>
+
+	<script>
+
+		//页面加载完成后，动态更新类别
+		document.addEventListener("DOMContentLoaded", function() {
+			// 触发AJAX请求
+			function loadCategories() {
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "/users/findAllCategory", true);
+				xhr.setRequestHeader("Content-Type", "application/json");
+
+				xhr.onreadystatechange = function() {
+					if (xhr.readyState === 4 && xhr.status === 200) {
+						var response = JSON.parse(xhr.responseText);
+						if (response.success) {
+							console.log("Categories loaded successfully:", response.data);
+							// 在这里处理返回的数据，例如更新页面内容
+							var categoryList = document.getElementById("demo-category");
+							var ss="";
+							for (let i = 0; i < response.data.length; i++) {
+								ss += "<option value="+response.data[i].categoryName+">"+response.data[i].categoryName+"</option>";
+							}
+							categoryList.innerHTML=ss;
+						} else {
+							console.error("Failed to fetch categories:", response.message);
+						}
+					} else if (xhr.readyState === 4) {
+						console.error("AJAX request failed with status:", xhr.status);
+					}
+				};
+				xhr.send();
+			}
+
+			// 立即发送请求或在需要时调用
+			loadCategories();
+		});
+
+
+		//提交按钮单击事件
+		$(document).ready(function() {
+			$('#uploadButton').click(function() {
+				var formData = new FormData($('#uploadForm')[0]); // 获取表单数据
+				$.ajax({
+					url: '/files/upload',
+					type: 'POST',
+					data: formData,
+					processData: false, // 告诉jQuery不要去处理发送的数据
+					contentType: false, // 告诉jQuery不要去设置Content-Type请求头
+					success: function(response) {
+						alert('Upload successful!');
+					},
+					error: function(xhr, status, error) {
+						console.error('Upload failed:', status, error);
+						alert('Upload failed!');
+					}
+				});
+			});
+		});
+	</script>
+
+
 	<body class="is-preload">
 
 		<!-- Wrapper -->
@@ -54,27 +116,25 @@
 										<div class="search-form">
 											<div class="left-div">
 												<div class="col-12">
-													<select name="demo-category" id="demo-category">
-														<option value="">科幻</option>
-														<option value="1">童话</option>
-														<option value="1">ab</option>
-														<option value="1">cd</option>
+													<select name="categoryName" id="demo-category">
+														<option value="科幻">科幻</option>
+														<option value="冒险">冒险</option>
 													</select>
 												</div>
 											</div>
 											<div class="mid-div">
 												<div class="col-6 col-12-xsmall">
-													<input type="text" name="demo-name" id="demo-name" value="" placeholder="标题" />
+													<input type="text" name="title" id="demo-name" value="" placeholder="标题" />
 												</div>
 											</div>
 										</div>
 										<br>
 										<div class="col-12">
-										<textarea name="demo-message" id="demo-message" placeholder="文章简介(关键词)" rows="6"></textarea>
-									</div>
+											<textarea name="keywords" id="demo-message" placeholder="文章简介(关键词)" rows="6"></textarea>
+										</div>
 										<br>
 										<input type="file" id="fileInput" name="file">
-										<button type="submit">Upload</button>
+										<button type="button" id="uploadButton">Upload</button>
 									</form>
 
 								</section>
@@ -111,12 +171,12 @@
 										<li><a href="#">Feugiat Veroeros</a></li>
 									</ul>
 								</li>
-								<li><a href="#">文库热度排行榜</a></li>
+								<li><a href="RankByhOT.html">文库热度排行榜</a></li>
 								<li>
 									<span class="opener">登录</span>
 									<ul>
 										<li><a href="Login.html">用户登录</a></li>
-										<li><a href="#">管理员帐号登录</a></li>
+										<li><a href="managerLogin.html">管理员帐号登录</a></li>
 									</ul>
 								</li>
 								<li><a href="#contentUs">联系我们</a></li>
@@ -178,7 +238,7 @@
 			<script src="../assets/js/breakpoints.min.js"></script>
 			<script src="../assets/js/util.js"></script>
 			<script src="../assets/js/main.js"></script>
-			<script src="upload.js"></script>
+			<script src="../assets/js/upload.js"></script>
 			<script src="../assets/js/login.js"></script>
 	</body>
 </html>

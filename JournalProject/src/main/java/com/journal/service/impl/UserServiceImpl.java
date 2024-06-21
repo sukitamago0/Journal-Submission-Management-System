@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.journal.dao.ArticleDao;
 import com.journal.dao.UserDao;
 import com.journal.pojo.Article;
+import com.journal.pojo.Category;
 import com.journal.pojo.basicClass.User;
 import com.journal.service.UserService;
 import com.journal.utils.PageRequest;
@@ -200,9 +201,54 @@ public class UserServiceImpl implements UserService {
         return articleDao.saveArticle(article);
     }
 
+    /**
+     * 通过类别名查询类别id
+     * @param categoryName
+     * @return
+     */
     @Override
     public int findCategoryIdByName(String categoryName) {
         return articleDao.findCategoryIdByName(categoryName);
+    }
+
+    /**
+     * 查询所有类别
+     * @return
+     */
+    @Override
+    public List<Category> findAllCategory() {
+        return articleDao.findAllCategory();
+    }
+
+    /**
+     * 根据userid查询稿件
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<Article> findByUserId(int userId) {
+        return articleDao.findByUserId(userId);
+    }
+
+    /**
+     * 更新文章点击次数
+     * @param article
+     * @return
+     */
+    @Override
+    public int updateArticleCount(Article article) {
+        return articleDao.updateArticleCount(article);
+    }
+
+    /**
+     * 根据点击次数查询文章
+     * @return
+     */
+    @Override
+    public PageInfo<Article> findByCount(int page) {
+        PageHelper.startPage(page,10);
+        List<Article> list = articleDao.findByCount();
+        return new PageInfo<>(list);
     }
 }
 

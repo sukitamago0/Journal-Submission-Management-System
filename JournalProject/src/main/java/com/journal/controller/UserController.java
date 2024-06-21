@@ -2,6 +2,7 @@ package com.journal.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.journal.pojo.Article;
+import com.journal.pojo.Category;
 import com.journal.pojo.basicClass.User;
 import com.journal.service.UserService;
 import com.journal.utils.ApiResponse;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -73,6 +75,7 @@ public class UserController {
         response.sendRedirect("/page/index.html");
     }
 
+    //根据关键词对文章进行模糊搜索
     @RequestMapping("/findArticle")
     public ApiResponse<PageInfo> findArticle(@RequestParam("key") String key,
                                              @RequestParam("searchWord") String searchWord,
@@ -99,4 +102,52 @@ public class UserController {
 
         return new ApiResponse<>(true, "Success", pageInfo);
     }
+
+    //获取所有类别
+    @RequestMapping("/findAllCategory")
+    public ApiResponse<List<Category>> findArticle() {
+        List<Category> list = userService.findAllCategory();
+        return new ApiResponse<>(true, "Success", list);
+    }
+
+    //通过用户id获取稿件(查询稿件状态api接口)
+    @RequestMapping("/findByUserid")
+    public ApiResponse<List<Article>> findByUserid(HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("user");
+        List<Article> list = userService.findByUserId(user.getUserID());
+        return new ApiResponse<>(true, "Success", list);
+    }
+
+    //按热度查询文章
+    @RequestMapping("/findByCount")
+    public ApiResponse<PageInfo> findByCount(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum) {
+        PageInfo<Article> info = userService.findByCount(pageNum);
+        return new ApiResponse<>(true, "Success", info);
+    }
+
+    //查询当期登录用户
+    @RequestMapping("/findCurUser")
+    public ApiResponse<User> findArticle(HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("user");
+        return new ApiResponse<>(true, "Success", user);
+    }
+
+    // 新建用户
+    @RequestMapping("/insertUser")
+    public ApiResponse<Integer> insertUser(@RequestBody User user) {
+        try {
+            int result = userService.insertUser(user);
+            if (result > 0) {
+                return new ApiResponse<>(true, "注册成功！", result);
+            } else {
+                return new ApiResponse<>(false, "注册失败，请联系管理员", result);
+            }
+        } catch (Exception e) {
+            // 在发生异常时返回一个带有错误消息的ApiResponse对象
+            return new ApiResponse<>(false, "注册失败，请联系管理员", null);
+        }
+    }
+
 }
+
+

@@ -2,6 +2,7 @@ package com.journal.service;
 
 import com.github.pagehelper.PageInfo;
 import com.journal.pojo.Article;
+import com.journal.pojo.Category;
 import com.journal.pojo.basicClass.User;
 import com.journal.utils.PageRequest;
 import org.apache.ibatis.annotations.Param;
@@ -25,4 +26,10 @@ public interface UserService {
     int updateArticleById(Article article);
     int saveArticle(Article article);
     int findCategoryIdByName(String categoryName);
+    List<Category> findAllCategory();
+
+    List<Article> findByUserId(int userId);
+
+    int updateArticleCount(Article article);
+    PageInfo<Article> findByCount(int page);
 }

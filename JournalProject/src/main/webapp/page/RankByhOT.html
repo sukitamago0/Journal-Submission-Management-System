@@ -4,22 +4,24 @@
       xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <head>
-  <title>期刊查找</title>
+  <title>热度排行</title>
   <meta charset="utf-8" />
   <!--保证不同设备显示效果-->
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="../assets/css/main.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <script>
+  $(document).ready(function() {
+    // 页面加载完成后发送ajax请求,更新期刊
+    findArticles();
+  });
 
-  //单击搜索函数
   function findArticles (pageNum) {
-    const key = document.getElementById('demo-category').value;
-    const searchWord = document.getElementById('demo-name').value;
-    url = `http://localhost:8080/users/findArticle?key=${key}&searchWord=${searchWord}`;
+    url = `http://localhost:8080/users/findByCount`
     if (pageNum != null && pageNum !=""){
-      url+='&pageNum='+pageNum;
+      url+='?pageNum='+pageNum;
     }
     axios.get(url)
             .then((res) => {
@@ -69,6 +71,7 @@
   }
 </script>
 
+
 <body class="is-preload">
 <!-- Wrapper -->
 <div id="wrapper">
@@ -85,37 +88,10 @@
       </header>
 
       <section>
-        <div id ="search-form">
-          <form onsubmit="findArticles(); return false;">
-            <div class="search-form">
-              <div class="left-div">
-                <div class="col-12">
-                  <select name="demo-category" id="demo-category">
-                    <option value="title">刊物名称</option>
-                    <option value="category">类别</option>
-                    <option value="author">作者</option>
-                    <option value="keywords">关键字搜索</option>
-                  </select>
-                </div>
-              </div>
-              <div class="mid-div">
-                <div class="col-6 col-12-xsmall">
-                  <input type="text" name="demo-name" id="demo-name" value="" placeholder="查询期刊" />
-                </div>
-              </div>
-              <div class="right-div">
-                <div class="col-12">
-                  <li><input type="submit" value="Search" class="primary" /></li>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </section>
 
       <section>
         <header class="main">
-          <h1>查询结果</h1>
+          <h1>文库热度排行榜</h1>
         </header>
       </section>
 

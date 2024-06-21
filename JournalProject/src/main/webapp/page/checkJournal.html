@@ -11,7 +11,130 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="../assets/css/main.css" />
     <link rel="stylesheet" href="../assets/css/checkJournal.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
+<script>
+
+    //页面加载完成后，动态加载需要审稿的列表
+    document.addEventListener("DOMContentLoaded", function() {
+        axios.get('/expert/findAll')
+            .then(function(response) {
+                if (response.data.success) {
+                    var articleList = document.getElementById("table-articles");
+                    var articles = response.data.data;
+                    var html = "";
+                    for (var i = 0; i < articles.length; i++) {
+                        html += "<tr>";
+                        html += "<td>" + articles[i].articleID + "</td>";
+                        html += "<td>" + articles[i].title + "</td>";
+                        html += "<td>" + articles[i].categoryName + "</td>";
+                        html += "<td>" + articles[i].nickName + "</td>";
+                        html += "<td>" + articles[i].upLoadTime + "</td>";
+                        html += "<td><a href='#' onclick='displayForm(" + articles[i].articleID + ")'>查看</a></td>";
+                        html += "</tr>";
+                    }
+                    articleList.innerHTML = html;
+                } else {
+                    console.error('Failed to fetch articles:', response.data.message);
+                }
+            })
+            .catch(function(error) {
+                console.error('AJAX request failed:', error);
+            });
+    });
+
+    //显示审核窗口
+    function displayForm(articleId) {
+        const floatingForm = document.getElementById('floating-form-re');
+        floatingForm.style.display = 'flex'; // 显示浮窗表单
+        // 将文章ID存储到sessionStorage中
+        sessionStorage.setItem('currentArticleId', articleId);
+    }
+    //关闭审核窗口
+    function displayForm2() {
+        const floatingForm = document.getElementById('floating-form-re');
+        floatingForm.style.display = 'none'; // 显示浮窗表单
+        // 从sessionStorage中删除存储的文章ID
+        sessionStorage.removeItem('currentArticleId');
+    }
+
+    //下载点击事件
+    function downloadDoc(){
+        //获取文章id
+        var articleId = sessionStorage.getItem('currentArticleId');
+
+        // 发送 AJAX 请求
+        $.ajax({
+            url: '/files/download?articleID='+articleId,
+            method: 'GET',
+            xhrFields: {
+                responseType: 'blob'
+            },
+            success: function(data, status, xhr) {
+                // 获取文件名
+                var fileName = '';
+                var disposition = xhr.getResponseHeader('Content-Disposition');
+                if (disposition && disposition.indexOf('attachment') !== -1) {
+                    var fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                    var matches = fileNameRegex.exec(disposition);
+                    if (matches != null && matches[1]) {
+                        fileName = matches[1].replace(/['"]/g, '');
+                    }
+                }
+
+                // 创建隐藏的<a>元素，并设置下载属性
+                var a = document.createElement('a');
+                var url = window.URL.createObjectURL(data);
+                a.href = url;
+                a.download = fileName || 'customFileName.doc'; // 如果没有获取到文件名，则默认为 customFileName.doc
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                // 触发点击事件下载文件
+                a.click();
+                // 移除<a>元素
+                document.body.removeChild(a);
+                // 释放URL对象
+                window.URL.revokeObjectURL(url);
+            },
+            error: function(xhr, status, error) {
+                console.error('文件下载失败:', error);
+            }
+        });
+    }
+
+    // 审核提交按钮
+    function submitBtn() {
+        // 获取文章id
+        var articleId = sessionStorage.getItem('currentArticleId');
+        // 获取用户选择的值
+        var state = document.querySelector('input[name="state"]:checked').value;
+
+        // 发送 AJAX 请求到后端
+        $.ajax({
+            url: '/expert/audit',
+            method: 'POST',
+            data: {
+                articleID: articleId,
+                state: state
+            },
+            success: function(response) {
+                // 处理后端返回的响应
+                if (response.success) {
+                    alert(response.message); // 显示成功消息
+                    location.reload();
+                } else {
+                    alert(response.message); // 显示失败消息
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('审核文章失败:', error);
+                alert('Failed to audit the article. Please contact the manager.');
+            }
+        });
+    }
+</script>
+
+
 <body class="is-preload">
 <!-- Wrapper -->
 <div id="wrapper">
@@ -46,15 +169,14 @@
                     </tr>
                     </thead>
                     <tbody id="table-articles">
-                                <tr>
-                                  <td>AC001</td>
-                                  <td>Ante turpis integer aliquet porttitor.</td>
-                                  <td>NoName</td>
-                                  <td>Item1</td>
-                                  <td>2024.12.12</td>
-                                  <td><a href="" id="check_journal">查看</a> </td>
-                                </tr>
-
+<!--                                <tr>-->
+<!--                                  <td>AC001</td>-->
+<!--                                  <td>Ante turpis integer aliquet porttitor.</td>-->
+<!--                                  <td>NoName</td>-->
+<!--                                  <td>Item1</td>-->
+<!--                                  <td>2024.12.12</td>-->
+<!--                                  <td><a  id="" onclick="displayForm()">查看</a> </td>-->
+<!--                                </tr>-->
                     </tbody>
                 </table>
             </div>
@@ -170,7 +292,7 @@
                 </div>
                 <div class="right">
                 <ul class="actions">
-                    <li><a href="#" class="button primary">Download</a></li>
+                    <li><a href="#" class="button primary" onclick="downloadDoc()">Download</a></li>
                 </ul>
                 </div>
                 <br>
@@ -179,21 +301,21 @@
                 </div>
                 <br>
 
-                <!--     单选框-->
+                <!-- 单选框 -->
                 <div class="col-4 col-12-small">
-                    <input type="radio" id="demo-priority-low" name="demo-priority" checked>
+                    <input type="radio" id="demo-priority-low" name="state" value="3" checked>
                     <label for="demo-priority-low">刊用</label>
                 </div>
                 <div class="col-4 col-12-small">
-                    <input type="radio" id="demo-priority-normal" name="demo-priority">
+                    <input type="radio" id="demo-priority-normal" name="state" value="2">
                     <label for="demo-priority-normal">不刊用</label>
                 </div>
             </div>
             <br>
-                <li><a href="#" class="button primary fit">submit</a></li>
+                <li><a class="button primary fit" onclick="submitBtn()">Submit</a></li>
         </form>
 
-        <p class="close-btn" id="close-floating-form">←返回</p>
+        <p class="close-btn" id="close-floating-form" onclick="displayForm2()">←返回</p>
     </div>
 </div>
 

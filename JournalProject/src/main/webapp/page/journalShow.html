@@ -26,18 +26,42 @@
           <li><a href="../personalHtml/personalHome.html" class="icon brands fa-medium-m" data-tooltip="个人主页"><span class="label">Medium</span></a></li>
         </ul>
       </header>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        // 获取当前页面的 URL
+        var currentUrl = window.location.href;
+        // 创建 URL 对象
+        var url = new URL(currentUrl);
+        // 从 URL 中获取 articleID 参数的值
+        var articleID = url.searchParams.get('articleID');
+        // 输出 articleID 参数的值
+        url = `http://localhost:8080/files/show?articleID=`+articleID;
+        axios.get(url)
+                .then((res) => {
+                  // 将获取的数据设置到相应的 HTML 元素中
+                  document.getElementById('title').innerHTML = '<h1>' + res.data.data.title + '</h1>';
+                  document.getElementById('content').innerHTML = '<h3>' + res.data.data.nickName + '</h3>';
+                  document.getElementById('keyword').innerHTML=res.data.data.keywords;
+                  document.getElementById('text').innerText = res.data.data.text;
+                })
+                .catch((error) => {
+                  console.error('Error:', error);
+                });
+      });
 
+
+    </script>
       <section>
-        <header class="main">
-          <h1>{$ajax请求获取本刊物名称}</h1>
+        <header class="main" id="title">
+          <h1></h1>
         </header>
 
-        <h2 id="content">{$作者名}</h2>
-        <p>{$关键字或一些信息 删了也行}</p>
+        <h2 id="content"></h2>
+        <p id="keyword"></p>
 
 
-        <text>
-          　{$文本插入}
+        <text id="text">
+
         </text>
       </section>
 
@@ -50,7 +74,6 @@
   <!-- Sidebar -->
   <div id="sidebar">
     <div class="inner">
-
       <!-- Search -->
       <section id="search" class="alt">
         <form method="post" action="#">
@@ -75,12 +98,12 @@
               <li><a href="#">Feugiat Veroeros</a></li>
             </ul>
           </li>
-          <li><a href="#">文库热度排行榜</a></li>
+          <li><a href="RankByhOT.html">文库热度排行榜</a></li>
           <li>
             <span class="opener">登录</span>
             <ul>
               <li><a href="Login.html">用户登录</a></li>
-              <li><a href="#">管理员帐号登录</a></li>
+              <li><a href="managerLogin.html">管理员帐号登录</a></li>
             </ul>
           </li>
           <li><a href="#contentUs">联系我们</a></li>
